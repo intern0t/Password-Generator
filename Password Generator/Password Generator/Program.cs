@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using System.Web;
 
@@ -10,15 +11,18 @@ namespace Password_Generator
         private static string PasswordCharacters    = "abcdefgijkmnopqrstwxyzABCDEFGHJKLMNPQRSTWXYZ0123456789*$-+?_&=!%{}/";
         private static string temp                  = string.Empty;
         private static int pwdLength                = 0;
-
+        
         static void Main(string[] args)
         {
             Console.Title = "Random Password Generator - NonInfectio.us!";
 
-            Write("Open Source Password Generator by Prashant M.Shrestha (Scarecrow) - www.noninfectio.us\n");
+            Write(  
+                "Open Source Password Generator by Prashant M.Shrestha (Scarecrow) - www.noninfectio.us\n" +
+                "Please input 0 to exit!"
+            );
 
             string Options = "Please type the length of password to generate 10 unique passwords.";
-
+            
             do
             {
                 while (!Console.KeyAvailable)
@@ -36,11 +40,16 @@ namespace Password_Generator
                         // Generate a password ..
                         Write(GeneratePassword(pwdLength) + Environment.NewLine);
                     }
-                    else { Write("Please have the password length be 1-128." + Environment.NewLine); }
 
                     Console.ForegroundColor = ConsoleColor.Gray;
+
+                    if(temp == "0")
+                    {
+                        Process.GetCurrentProcess().Kill();
+                    }
                 }
-            } while (Console.ReadKey(true).Key != ConsoleKey.Escape);
+
+            } while (temp == "0");
         }
 
         /// <summary>
