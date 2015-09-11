@@ -34,6 +34,7 @@ namespace Password_Generator
                     if (pwdLength > 0 && pwdLength <= 128)
                     {
                         // Generate a password ..
+                        Write(GeneratePassword(pwdLength) + Environment.NewLine);
                     }
                     else { Write("Please have the password length be 1-128." + Environment.NewLine); }
 
@@ -42,6 +43,29 @@ namespace Password_Generator
             } while (Console.ReadKey(true).Key != ConsoleKey.Escape);
         }
 
+        /// <summary>
+        ///     Generates a password with given password length.
+        /// </summary>
+        /// <param name="pLength"></param>
+        /// <returns></returns>
+        static string GeneratePassword(int pLength)
+        {
+            string toReturn = string.Empty;
+            Random R = new Random();
+
+            for (int i = 0; i < pLength; ++i)
+            {
+                int Randomized = R.Next(0, PasswordCharacters.Length - 1);
+                toReturn += PasswordCharacters.Substring(Randomized, 1);
+            }
+
+            return toReturn;
+        }
+
+        /// <summary>
+        ///     Shortened Console.Write(Line) for ease of use!
+        /// </summary>
+        /// <param name="S"></param>
         static void Write(string S)
         {
             Console.WriteLine(S);
